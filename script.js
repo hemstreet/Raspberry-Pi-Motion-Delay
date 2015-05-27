@@ -1,5 +1,5 @@
 var gpio = require("pi-gpio"),
-    duration = 600000,
+    duration = 5000,
     toggleLights = null,
     hasTimedOut = false;
 
