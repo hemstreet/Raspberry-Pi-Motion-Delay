@@ -1,45 +1,49 @@
 var gpio = require("pi-gpio"),
-    duration = 600000,
-    toggleLights = null;
+    duration = 5000,
+    toggleLights = null,
+    hasTimedOut = false,
+    lightsAreOn = false;
 
-checkForMotion();
+//duration = 600000,
 
 function checkForMotion() {
 
-    var checks = function callFn() {
+    gpio.read(11, function(err, value) {
 
-        gpio.read(11, function(err, value) {
+        if(err) throw err;
 
-            if(err) throw err;
+        if(value === 1) {
 
-            if(value === 1) {
-                console.log('Motion Detected');
-                timeReset(toggleLights, checks);
-                return;
+            if(hasTimedOut) {
+                isBack();
             }
 
-        });
+            console.log('Motion Detected');
+            clearTime();
+            toggleLights = setTimeout(timedOut, duration);
+        }
 
-        setTimeout(checks, 1000);
-    };
+        console.log(value);
 
-    toggleLights = setTimeout(function(){
-        timedOut(checks);
-    }, duration);
+    });
 
-    setTimeout(checks, 1000);
+    setTimeout(checkForMotion, 1000);
 
 }
 
-function timedOut(checks) {
-
-    console.log('Timed out');
-    clearTimeout(checks);
-    checkForMotion();
+function isBack() {
+    console.log('back');
 }
 
-function timeReset(toggleLights) {
-    console.log('Reset time');
+function clearTime() {
+    hasTimedOut = false;
     clearTimeout(toggleLights);
-    checkForMotion();
 }
+
+function timedOut() {
+
+    hasTimedOut = true;
+    console.log('Timed out');
+}
+
+checkForMotion(); // Kick off the script
