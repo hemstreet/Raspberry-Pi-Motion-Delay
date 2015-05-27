@@ -2,10 +2,8 @@ var gpio = require("pi-gpio"),
     duration = 5000,
     toggleLights = null;
 
-
 //duration = 600000,
 checkForMotion();
-
 
 function checkForMotion() {
 
