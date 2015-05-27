@@ -1,10 +1,7 @@
 var gpio = require("pi-gpio"),
-    duration = 5000,
+    duration = 600000,
     toggleLights = null,
-    hasTimedOut = false,
-    lightsAreOn = false;
-
-//duration = 600000,
+    hasTimedOut = false;
 
 function checkForMotion() {
 
@@ -22,8 +19,6 @@ function checkForMotion() {
             clearTime();
             toggleLights = setTimeout(timedOut, duration);
         }
-
-        console.log(value);
 
     });
 
