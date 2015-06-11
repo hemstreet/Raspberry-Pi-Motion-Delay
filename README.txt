@@ -8,3 +8,4 @@ When running the script it will map the pins to a folder like:
 
 To fix this run `sudo echo 23 > /sys/class/gpio/export`
 
+if that does now work we can run `sudo sh -c "echo 23 >/sys/class/gpio/export"` to run the command in its own shell as sudo access
